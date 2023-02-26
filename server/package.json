@@ -1,0 +1,28 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "HartJN",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/crypto-js": "^4.1.1",
+    "@types/lodash": "^4.14.191",
+    "pino-pretty": "^9.4.0",
+    "ts-node-dev": "^2.0.0",
+    "typescript": "^4.9.5"
+  },
+  "dependencies": {
+    "@fastify/cookie": "^8.3.0",
+    "@fastify/cors": "^8.2.0",
+    "@fastify/jwt": "^6.6.0",
+    "@typegoose/typegoose": "^10.2.0",
+    "argon2": "^0.30.3",
+    "crypto-js": "^4.1.1",
+    "fastify": "^4.13.0",
+    "fastify-zod": "^1.2.0",
+    "lodash": "^4.17.21",
+    "mongoose": "^6.10.0",
+    "pino": "^8.11.0",
+    "zod": "^3.20.6"
+  }
+}
