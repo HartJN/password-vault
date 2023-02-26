@@ -1,0 +1,16 @@
+{
+  "devDependencies": {
+    "@commitlint/cli": "^17.4.4",
+    "@commitlint/config-conventional": "^17.4.4",
+    "husky": "^8.0.3",
+    "prettier": "^2.8.4"
+  },
+  "name": "password-manager",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "HartJN <jameshart04@gmail.com>",
+  "license": "MIT",
+  "lint-staged": {
+    "**/*": "prettier --write --ignore-unknown"
+  }
+}
