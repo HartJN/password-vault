@@ -21,10 +21,10 @@ function createServer() {
   app.register(fastifyJwt, {
     secret: {
       private: fs.readFileSync(
-        `${(path.join(process.cwd()), 'certs')}}/private.key`
+        `${(path.join(process.cwd()), 'certs')}/private.key`
       ),
       public: fs.readFileSync(
-        `${(path.join(process.cwd()), 'certs')}}/public.key`
+        `${(path.join(process.cwd()), 'certs')}/public.key`
       ),
     },
     sign: {
