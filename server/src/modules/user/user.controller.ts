@@ -3,7 +3,11 @@ import { FastifyRequest } from 'fastify';
 import { COOKIE_DOMAIN } from '../../utils/constants';
 import log from '../../utils/logger';
 import { createVault } from '../vault/vault.service';
-import { createUser, generateSalt } from './user.service';
+import {
+  createUser,
+  findUserByEmailAndPassword,
+  generateSalt,
+} from './user.service';
 
 export async function registerUserHandler(
   request: FastifyRequest<{
@@ -29,7 +33,7 @@ export async function registerUserHandler(
     reply.setCookie('token', accessToken, {
       domain: COOKIE_DOMAIN,
       path: '/',
-      secure: false,
+      secure: process.env.NODE_ENV === 'production' ? true : false,
       httpOnly: true,
       sameSite: false,
     });
@@ -39,4 +43,32 @@ export async function registerUserHandler(
     log.error(e, 'error creating user');
     return reply.code(500).send(e);
   }
+}
+
+export async function loginUserHandler(
+  request: FastifyRequest<{
+    Body: Parameters<typeof createUser>[number];
+  }>,
+  reply: FastifyReply
+) {
+  const user = await findUserByEmailAndPassword(request.body);
+
+  if (!user) {
+    return reply.code(401).send('Invalid credentials');
+  }
+
+  const accessToken = await reply.jwtSign({
+    _id: user._id,
+    email: user.email,
+  });
+
+  reply.setCookie('token', accessToken, {
+    domain: COOKIE_DOMAIN,
+    path: '/',
+    secure: process.env.NODE_ENV === 'production' ? true : false,
+    httpOnly: true,
+    sameSite: false,
+  });
+
+  return reply.code(200).send({ accessToken });
 }
