@@ -12,6 +12,11 @@ export async function updateVaultHandler(
   reply: FastifyReply
 ) {
   const userId = get(request, 'user._id');
+  console.log('🚀 ~ userId:', userId);
+
+  if (!userId) {
+    return reply.code(401).send('Unauthorized');
+  }
 
   try {
     await updateVault({
