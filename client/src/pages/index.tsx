@@ -7,7 +7,7 @@ import LoginForm from '@/components/LoginForm';
 import Vault from '@/components/Vault';
 
 export default function Home() {
-  const [step, setStep] = useState<'login' | 'register' | 'vault'>('login');
+  const [step, setStep] = useState<'login' | 'register' | 'vault'>('register');
 
   return (
     <>
@@ -17,7 +17,7 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main>
+      <main className={styles.main}>
         {step === 'register' && <RegisterForm />}
         {step === 'login' && <LoginForm />}
         {step === 'vault' && <Vault />}
