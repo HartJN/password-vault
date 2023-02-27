@@ -29,3 +29,6 @@ dist-ssr
 # Database
 *.sql
 *.sqlite
+
+private.key
+public.key
