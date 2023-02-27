@@ -14,6 +14,14 @@ export function registerUser(payload: {
     .then((res) => res.data);
 }
 
+export function loginUser(payload: { hashedPassword: string; email: string }) {
+  return axios
+    .post<{ salt: string; vault: string }>(`${userBase}/login`, payload, {
+      withCredentials: true,
+    })
+    .then((res) => res.data);
+}
+
 export function saveVault({ encryptedVault }: { encryptedVault: string }) {
   return axios
     .put(vaultBase, { encryptedVault }, { withCredentials: true })
