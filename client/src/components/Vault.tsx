@@ -1,6 +1,8 @@
+import { saveVault } from '@/api';
 import { encryptVault } from '@/crypto';
 import { VaultItem } from '@/pages';
 import { Box, Button, FormControl, FormLabel, Input } from '@chakra-ui/react';
+import { useMutation } from '@tanstack/react-query';
 import { useFieldArray, useForm } from 'react-hook-form';
 import FormWrapper from './FormWrapper';
 
@@ -11,18 +13,30 @@ function Vault({
   vault: VaultItem[];
   vaultKey: string;
 }) {
-  const { control, register, handleSubmit } = useForm();
+  const { control, register, handleSubmit } = useForm({
+    defaultValues: {
+      vault,
+    },
+  });
 
   const { fields, append, remove } = useFieldArray({
     control,
     name: 'vault',
   });
+
+  const mutation = useMutation(saveVault);
+
   return (
     <FormWrapper
       onSubmit={handleSubmit(({ vault }) => {
-        const encryptedVault = encryptVault({ vault, vaultKey });
+        const encryptedVault = encryptVault({
+          vault: JSON.stringify({ vault }),
+          vaultKey,
+        });
 
         window.sessionStorage.setItem('vault', JSON.stringify(vault));
+
+        mutation.mutate({ encryptedVault });
       })}
     >
       {fields.map((field, index) => {
