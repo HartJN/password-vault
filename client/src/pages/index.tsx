@@ -13,13 +13,13 @@ export interface VaultItem {
 }
 
 export default function Home() {
-  const [step, setStep] = useState<'login' | 'register' | 'vault'>('vault');
+  const [step, setStep] = useState<'login' | 'register' | 'vault'>('login');
   const [vault, setVault] = useState<VaultItem[]>([]);
   const [vaultKey, setVaultKey] = useState('');
 
   useEffect(() => {
     const vault = window.sessionStorage.getItem('vault');
-    const vaultKey = window.sessionStorage.getItem('vaultKey');
+    const vaultKey = window.sessionStorage.getItem('vk');
 
     if (vault) {
       setVault(JSON.parse(vault));
@@ -43,7 +43,13 @@ export default function Home() {
         {step === 'register' && (
           <RegisterForm setStep={setStep} setVaultKey={setVaultKey} />
         )}
-        {step === 'login' && <LoginForm />}
+        {step === 'login' && (
+          <LoginForm
+            setVault={setVault}
+            setStep={setStep}
+            setVaultKey={setVaultKey}
+          />
+        )}
         {step === 'vault' && <Vault vault={vault} vaultKey={vaultKey} />}
       </main>
     </>
