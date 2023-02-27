@@ -37,3 +37,7 @@ export async function findUserByEmailAndPassword({
 
   return user;
 }
+
+export function findVaultByUser(userId: string) {
+  return VaultModel.findOne({ user: userId });
+}
