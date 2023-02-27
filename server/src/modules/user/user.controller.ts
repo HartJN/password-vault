@@ -19,7 +19,6 @@ export async function registerUserHandler(
   const body = request.body;
 
   try {
-    console.log('hit before create user');
     const user = await createUser(body);
 
     const salt = generateSalt();
