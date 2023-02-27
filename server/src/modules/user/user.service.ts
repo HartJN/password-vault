@@ -1,5 +1,6 @@
 import argon2 from 'argon2';
 import crypto from 'crypto';
+import { VaultModel } from '../vault/vault.model';
 import { UserModel } from './user.model';
 
 export function generateSalt() {
