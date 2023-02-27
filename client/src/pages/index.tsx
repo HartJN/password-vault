@@ -1,8 +1,14 @@
 import Head from 'next/head';
 import Image from 'next/image';
 import styles from '@/styles/Home.module.css';
+import { useState } from 'react';
+import RegisterForm from '@/components/RegisterForm';
+import LoginForm from '@/components/LoginForm';
+import Vault from '@/components/Vault';
 
 export default function Home() {
+  const [step, setStep] = useState<'login' | 'register' | 'vault'>('login');
+
   return (
     <>
       <Head>
@@ -11,8 +17,10 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main className={styles.main}>
-        <div>hi</div>
+      <main>
+        {step === 'register' && <RegisterForm />}
+        {step === 'login' && <LoginForm />}
+        {step === 'vault' && <Vault />}
       </main>
     </>
   );
