@@ -1,3 +1,4 @@
+import { encryptVault } from '@/crypto';
 import { VaultItem } from '@/pages';
 import { Box, Button, FormControl, FormLabel, Input } from '@chakra-ui/react';
 import { useFieldArray, useForm } from 'react-hook-form';
@@ -19,7 +20,7 @@ function Vault({
   return (
     <FormWrapper
       onSubmit={handleSubmit(({ vault }) => {
-        console.log({ vault });
+        const encryptedVault = encryptVault({ vault, vaultKey });
       })}
     >
       {fields.map((field, index) => {
