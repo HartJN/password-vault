@@ -21,6 +21,8 @@ function Vault({
     <FormWrapper
       onSubmit={handleSubmit(({ vault }) => {
         const encryptedVault = encryptVault({ vault, vaultKey });
+
+        window.sessionStorage.setItem('vault', JSON.stringify(vault));
       })}
     >
       {fields.map((field, index) => {
