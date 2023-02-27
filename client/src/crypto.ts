@@ -1,5 +1,5 @@
 import pbkdf2 from 'crypto-js/pbkdf2';
-import { AES, SHA256 } from 'crypto-js';
+import { AES, enc, SHA256 } from 'crypto-js';
 
 export function hashPassword(password: string) {
   return SHA256(password).toString();
@@ -15,6 +15,24 @@ export function generateVaultKey({
   salt: string;
 }) {
   return pbkdf2(`${email}${hashedPassword}`, salt, { keySize: 32 }).toString();
+}
+
+export function decryptVault({
+  vaultKey,
+  vault,
+}: {
+  vaultKey: string;
+  vault: string;
+}) {
+  const bytes = AES.decrypt(vault, vaultKey);
+
+  const decryptedData = bytes.toString(enc.Utf8);
+
+  try {
+    return JSON.parse(decryptedData).vault;
+  } catch (error) {
+    return null;
+  }
 }
 
 export function encryptVault({
