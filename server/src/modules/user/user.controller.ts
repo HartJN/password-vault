@@ -6,6 +6,7 @@ import { createVault } from '../vault/vault.service';
 import {
   createUser,
   findUserByEmailAndPassword,
+  findVaultByUser,
   generateSalt,
 } from './user.service';
 
@@ -57,6 +58,8 @@ export async function loginUserHandler(
     return reply.code(401).send('Invalid credentials');
   }
 
+  const vault = await findVaultByUser(user._id);
+
   const accessToken = await reply.jwtSign({
     _id: user._id,
     email: user.email,
@@ -70,5 +73,7 @@ export async function loginUserHandler(
     sameSite: false,
   });
 
-  return reply.code(200).send({ accessToken });
+  return reply
+    .code(200)
+    .send({ accessToken, vault: vault?.data, salt: vault?.salt });
 }
